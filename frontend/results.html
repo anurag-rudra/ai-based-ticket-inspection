@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AGL IncidentScout - Scan Results</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "surface-container": "#eceef2",
+          "surface-container-low": "#f2f3f7",
+          "primary-fixed-dim": "#bcc2ff",
+          "tertiary-fixed": "#e1e2e6",
+          "surface-bright": "#f8f9fd",
+          "on-primary-fixed-variant": "#1e32bd",
+          "tertiary": "#202326",
+          "on-background": "#191c1f",
+          "on-primary-container": "#8d9aff",
+          "on-secondary-fixed": "#221b00",
+          "secondary": "#705d00",
+          "on-tertiary-fixed-variant": "#44474a",
+          "on-tertiary": "#ffffff",
+          "surface": "#f8f9fd",
+          "surface-container-high": "#e7e8ec",
+          "tertiary-container": "#35383b",
+          "primary-fixed": "#dfe0ff",
+          "error-container": "#ffdad6",
+          "secondary-container": "#fcd400",
+          "inverse-on-surface": "#eff1f4",
+          "surface-container-highest": "#e1e2e6",
+          "on-primary": "#ffffff",
+          "on-surface-variant": "#454654",
+          "primary": "#000f76",
+          "surface-dim": "#d8dade",
+          "on-error-container": "#93000a",
+          "secondary-fixed-dim": "#e9c400",
+          "on-error": "#ffffff",
+          "on-tertiary-container": "#9fa1a5",
+          "on-surface": "#191c1f",
+          "surface-tint": "#3c4ed5",
+          "surface-container-lowest": "#ffffff",
+          "inverse-primary": "#bcc2ff",
+          "surface-variant": "#e1e2e6",
+          "on-secondary-container": "#6e5c00",
+          "error": "#ba1a1a",
+          "background": "#f8f9fd",
+          "outline-variant": "#c5c5d7",
+          "on-primary-fixed": "#000b62",
+          "inverse-surface": "#2e3134",
+          "on-tertiary-fixed": "#191c1f",
+          "on-secondary-fixed-variant": "#544600",
+          "on-secondary": "#ffffff",
+          "primary-container": "#001cb0",
+          "outline": "#757686",
+          "secondary-fixed": "#ffe16d",
+          "tertiary-fixed-dim": "#c5c6ca"
+        },
+        fontFamily: {
+          "headline": ["Space Grotesk"],
+          "body": ["Inter"],
+          "label": ["Inter"]
+        },
+        borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  body { font-family: 'Inter', sans-serif; }
+  h1, h2, h3, .font-headline { font-family: 'Space Grotesk', sans-serif; }
+</style>
+</head>
+<body class="bg-surface text-on-surface flex min-h-screen">
+
+<!-- ── Side Nav ───────────────────────────────────────────────────────── -->
+<aside class="hidden lg:flex flex-col fixed left-0 top-0 h-full py-6 bg-slate-50 w-64 border-r border-slate-200 z-50">
+  <div class="px-6 mb-10 flex items-center gap-3">
+    <div class="w-10 h-10 bg-primary rounded flex items-center justify-center text-white">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">security</span>
+    </div>
+    <div>
+      <h1 class="text-lg font-black tracking-tighter text-blue-900">Hygiene Suite</h1>
+      <p class="text-[10px] uppercase tracking-widest font-semibold text-slate-500">Technical Curator v1.0</p>
+    </div>
+  </div>
+  <nav class="flex-1 px-4 space-y-2">
+    <p class="text-xs uppercase tracking-wider font-semibold text-slate-400 px-2 mb-2">Main Menu</p>
+    <a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-blue-600 rounded-lg transition-all" href="index.html">
+      <span class="material-symbols-outlined">dashboard</span><span class="text-sm font-medium">Overview</span>
+    </a>
+    <a class="flex items-center gap-3 px-3 py-2 bg-blue-50 text-blue-700 border-r-4 border-blue-700 font-medium rounded-lg" href="results.html">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">analytics</span><span class="text-sm font-bold">All Reports</span>
+    </a>
+    <!-- <a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-blue-600 rounded-lg transition-all" href="analysis.html">
+      <span class="material-symbols-outlined">fact_check</span><span class="text-sm font-medium">Details</span>
+    </a>
+    <a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-blue-600 rounded-lg transition-all" href="#">
+      <span class="material-symbols-outlined">settings</span><span class="text-sm font-medium">Criteria Config</span>
+    </a> -->
+  </nav>
+  <div class="px-4 mt-auto space-y-2 border-t border-slate-200 pt-6">
+    <a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-blue-600 rounded-lg" href="#">
+      <span class="material-symbols-outlined">contact_support</span><span class="text-sm font-medium">Support</span>
+    </a>
+    <a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-blue-600 rounded-lg" href="#">
+      <span class="material-symbols-outlined">history</span><span class="text-sm font-medium">Logs</span>
+    </a>
+  </div>
+</aside>
+
+<!-- ── Main Canvas ────────────────────────────────────────────────────── -->
+<main class="flex-1 lg:ml-64 min-h-screen flex flex-col">
+
+  <!-- Top Nav -->
+  <header class="sticky top-0 z-50 flex items-center justify-between px-6 py-3 w-full bg-white shadow-sm">
+    <div class="flex items-center gap-8">
+      <span class="text-xl font-bold text-blue-900 font-headline">AGL IncidentScout</span>
+      <nav class="hidden md:flex items-center gap-6">
+        <a class="text-slate-600 font-medium hover:text-blue-600" href="index.html">Dashboard</a>
+        <a class="text-blue-700 border-b-2 border-blue-700 font-bold" href="#">Scans</a>
+        <!-- <a class="text-slate-600 font-medium hover:text-blue-600" href="analysis.html">Analysis</a>
+        <a class="text-slate-600 font-medium hover:text-blue-600" href="#">Settings</a> -->
+      </nav>
+    </div>
+    <div class="flex items-center gap-4">
+      <div class="relative hidden sm:block">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+        <input class="pl-10 pr-4 py-1.5 bg-slate-100 border-none rounded-full text-sm focus:ring-2 focus:ring-blue-500 w-64" placeholder="Search reports..." type="text"/>
+      </div>
+      <button class="material-symbols-outlined p-2 text-slate-600 hover:bg-slate-100 rounded-full">notifications</button>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <div class="p-8 space-y-8 max-w-7xl mx-auto w-full">
+
+    <!-- Page Header -->
+    <section class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <nav class="flex items-center gap-2 text-sm text-on-surface-variant mb-2">
+          <span>Scans</span>
+          <span class="material-symbols-outlined text-xs">chevron_right</span>
+          <span class="font-bold text-primary">Recent Analysis</span>
+        </nav>
+        <h2 class="text-4xl font-bold font-headline tracking-tight text-primary">Incident Hygiene Overview</h2>
+        <p class="text-on-surface-variant mt-2 max-w-2xl">A comprehensive technical evaluation of ticket data quality and process adherence.</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="flex items-center gap-2 px-4 py-2 bg-surface-container-low text-on-surface-variant rounded-lg hover:bg-surface-container-high transition-colors">
+          <span class="material-symbols-outlined text-sm">filter_list</span>Filter
+        </button>
+        <button class="flex items-center gap-2 px-4 py-2 bg-surface-container-low text-on-surface-variant rounded-lg hover:bg-surface-container-high transition-colors">
+          <span class="material-symbols-outlined text-sm">download</span>Export PDF
+        </button>
+      </div>
+    </section>
+
+    <!-- KPI Bento Grid -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- Radial Gauge -->
+      <div class="lg:col-span-4 bg-surface-container-lowest rounded-xl p-8 flex flex-col items-center justify-center relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+          <span class="material-symbols-outlined text-8xl text-primary">health_metrics</span>
+        </div>
+        <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-8 w-full text-center">Global Hygiene Health</h3>
+        <div class="relative w-48 h-48 flex items-center justify-center">
+          <svg class="w-full h-full transform -rotate-90" viewBox="0 0 192 192">
+            <circle class="text-surface-container-highest" cx="96" cy="96" fill="transparent" r="88" stroke="currentColor" stroke-width="12"/>
+            <circle id="gaugeCircle" cx="96" cy="96" fill="transparent" r="88"
+              stroke="#000f76" stroke-dasharray="552.9" stroke-dashoffset="552.9"
+              stroke-linecap="round" stroke-width="12"
+              style="transition: stroke-dashoffset 1s ease"/>
+          </svg>
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <span class="text-5xl font-bold font-headline text-primary tracking-tighter">
+              <span id="gaugePercent">—</span><span class="text-2xl" id="gaugeSuffix"></span>
+            </span>
+            <span class="text-xs font-bold text-on-surface-variant" id="gaugeLabel">LOADING</span>
+          </div>
+        </div>
+        <div class="mt-8 grid grid-cols-2 gap-8 w-full border-t border-outline-variant pt-6">
+          <div class="text-center">
+            <p class="text-xs text-on-surface-variant uppercase font-semibold">Total Scanned</p>
+            <p class="text-xl font-bold font-headline" id="totalTickets">—</p>
+          </div>
+          <div class="text-center border-l border-outline-variant">
+            <p class="text-xs text-on-surface-variant uppercase font-semibold">Avg Score</p>
+            <p class="text-xl font-bold font-headline" id="avgScore">—</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Score Distribution Chart -->
+      <div class="lg:col-span-8 bg-surface-container-lowest rounded-xl p-8 flex flex-col">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Score Distribution</h3>
+            <p class="text-2xl font-bold font-headline text-primary">Quality Frequency</p>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-red-700"></span><span class="text-[10px] font-bold">CRITICAL</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-yellow-400"></span><span class="text-[10px] font-bold">MODERATE</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-green-700"></span><span class="text-[10px] font-bold">GOOD</span></div>
+          </div>
+        </div>
+        <!-- Chart bars rendered by JS -->
+        <div class="flex-1 flex items-end justify-around gap-4 px-4 min-h-[200px]" id="scoreDistributionChart">
+          <div class="text-center text-on-surface-variant w-full text-sm">Loading chart…</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Incident Log Table -->
+    <section class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">
+      <div class="p-6 border-b border-outline-variant flex items-center justify-between">
+        <div>
+          <h3 class="text-xl font-bold font-headline text-primary">Incident Log</h3>
+          <p class="text-sm text-on-surface-variant" id="scanInfo">Loading…</p>
+        </div>
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+          <input id="searchInput" class="pl-9 pr-4 py-1.5 bg-surface-container-low border-none rounded-lg text-xs w-48 focus:ring-2 focus:ring-blue-500" placeholder="Search ticket ID…" type="text"/>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-surface-container-low text-on-surface-variant uppercase text-[10px] tracking-widest font-bold">
+              <th class="px-6 py-4">Ticket ID</th>
+              <th class="px-6 py-4">Score</th>
+              <th class="px-6 py-4">Severity</th>
+              <th class="px-6 py-4">Passed Checks</th>
+              <th class="px-6 py-4 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="resultsTableBody" class="divide-y divide-outline-variant">
+            <tr>
+              <td colspan="5" class="px-6 py-8 text-center text-on-surface-variant">Loading scan results…</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="p-4 bg-surface-container-low flex items-center justify-between">
+        <span id="paginationInfo" class="text-xs text-on-surface-variant font-medium">Showing 0 of 0 tickets</span>
+        <div id="paginationContainer" class="flex items-center gap-2"></div>
+      </div>
+    </section>
+
+  </div><!-- /content -->
+
+  <footer class="mt-auto p-6 bg-surface-container-low text-center">
+    <p class="text-[10px] text-on-surface-variant uppercase tracking-[0.2em] font-bold">© 2024 IncidentScout Hygiene Engine • Technical Confidentiality Guaranteed</p>
+  </footer>
+</main>
+
+<!-- FAB -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-105 transition-transform z-50">
+  <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">add</span>
+</button>
+
+<script>
+  // ── Config ────────────────────────────────────────────────────────────────
+  // Set this to your API endpoint, e.g. '/api/scan' on Vercel.
+  // Falls back to inline demo data when the endpoint is unavailable.
+  const API_ENDPOINT = '/api/scan';
+
+  // ── State ─────────────────────────────────────────────────────────────────
+  let allResults  = [];
+  let currentPage = 1;
+  const PAGE_SIZE = 10;
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+  function getSeverityColor(severity) {
+    switch (severity) {
+      case 'GOOD':     return '#166534';
+      case 'MODERATE': return '#ca8a04';
+      case 'CRITICAL': return '#ba1a1a';
+      default:         return '#757686';
+    }
+  }
+
+  function getFilteredResults() {
+    const term = (document.getElementById('searchInput')?.value || '').toLowerCase();
+    return term ? allResults.filter(r => r.ticket_id.toLowerCase().includes(term)) : allResults;
+  }
+
+  // ── KPIs ──────────────────────────────────────────────────────────────────
+  function updateKPIs() {
+    const total  = allResults.length;
+    const avg    = total ? (allResults.reduce((s, t) => s + t.score, 0) / total) : 0;
+    const pct    = Math.round((avg / 10) * 100);
+    const offset = 552.9 * (1 - avg / 10);
+
+    document.getElementById('totalTickets').textContent = total;
+    document.getElementById('avgScore').textContent     = avg.toFixed(1) + '/10';
+    document.getElementById('gaugePercent').textContent = avg.toFixed(1);
+    document.getElementById('gaugeSuffix').textContent  = '/10';
+    document.getElementById('gaugeLabel').textContent   =
+      avg >= 8 ? 'OPTIMISED' : avg >= 5 ? 'MODERATE' : 'CRITICAL';
+    document.getElementById('gaugeCircle').style.strokeDashoffset = offset;
+    document.getElementById('scanInfo').textContent =
+      `Detailed scoring for ${total} scanned tickets`;
+  }
+
+  // ── Chart ─────────────────────────────────────────────────────────────────
+  function updateScoreDistribution() {
+    const buckets = [
+      { label: '0–2',  min: 0, max: 2,  color: '#ba1a1a' },
+      { label: '2–4',  min: 2, max: 4,  color: '#f97316' },
+      { label: '4–6',  min: 4, max: 6,  color: '#facc15' },
+      { label: '6–8',  min: 6, max: 8,  color: '#84cc16' },
+      { label: '8–10', min: 8, max: 10, color: '#166534' },
+    ].map(b => ({
+      ...b,
+      count: allResults.filter(t => t.score >= b.min && (b.max === 10 ? t.score <= b.max : t.score < b.max)).length
+    }));
+
+    const maxCount = Math.max(...buckets.map(b => b.count), 1);
+    document.getElementById('scoreDistributionChart').innerHTML = buckets.map(b => `
+      <div class="flex flex-col items-center gap-3 flex-1 group" style="max-width:80px">
+        <span class="text-xs font-bold text-on-surface-variant">${b.count}</span>
+        <div class="w-full rounded-t-lg transition-all duration-700 group-hover:opacity-100"
+             style="height:${Math.max((b.count / maxCount) * 160, 4)}px; background:${b.color}; opacity:0.8"></div>
+        <div class="text-center">
+          <span class="block text-xs font-bold">${b.label}</span>
+        </div>
+      </div>`).join('');
+  }
+
+  // ── Table ─────────────────────────────────────────────────────────────────
+  function displayResults(results, page) {
+    const total      = results.length;
+    const totalPages = Math.ceil(total / PAGE_SIZE);
+    const start      = (page - 1) * PAGE_SIZE;
+    const end        = Math.min(start + PAGE_SIZE, total);
+    const pageData   = results.slice(start, end);
+
+    if (total === 0) {
+      document.getElementById('resultsTableBody').innerHTML =
+        '<tr><td colspan="5" class="px-6 py-8 text-center text-on-surface-variant">No results match your search.</td></tr>';
+      document.getElementById('paginationInfo').textContent = 'Showing 0 of 0 tickets';
+      document.getElementById('paginationContainer').innerHTML = '';
+      return;
+    }
+
+    document.getElementById('resultsTableBody').innerHTML = pageData.map(ticket => {
+      const color = getSeverityColor(ticket.severity);
+      const pct   = ((ticket.score / 10) * 100).toFixed(0);
+      return `
+        <tr class="hover:bg-surface-container-low transition-colors">
+          <td class="px-6 py-4">
+            <div class="flex items-center gap-3">
+              <div class="p-2 rounded-lg" style="background:${color}15">
+                <span class="material-symbols-outlined text-sm" style="color:${color}">confirmation_number</span>
+              </div>
+              <span class="font-bold text-sm text-primary">${ticket.ticket_id}</span>
+            </div>
+          </td>
+          <td class="px-6 py-4">
+            <div class="flex items-center gap-2">
+              <span class="w-24 h-2 bg-surface-container-high rounded-full overflow-hidden">
+                <span class="block h-full rounded-full" style="width:${pct}%; background:${color}"></span>
+              </span>
+              <span class="text-xs font-black" style="color:${color}">${ticket.score_display}</span>
+            </div>
+          </td>
+          <td class="px-6 py-4">
+            <span class="text-xs font-semibold px-2 py-1 rounded-full"
+                  style="background:${color}20; color:${color}">${ticket.severity_label}</span>
+          </td>
+          <td class="px-6 py-4 text-sm font-medium">${ticket.passed_count}/${ticket.total_checks}</td>
+          <td class="px-6 py-4 text-right">
+            <button onclick="showDetails('${ticket.ticket_id}')"
+                    class="text-xs font-bold text-primary hover:underline flex items-center justify-end gap-1 ml-auto">
+              View Details <span class="material-symbols-outlined text-xs">arrow_forward</span>
+            </button>
+          </td>
+        </tr>`;
+    }).join('');
+
+    document.getElementById('paginationInfo').textContent =
+      `Showing ${start + 1}–${end} of ${allResults.length} tickets`;
+    renderPagination(totalPages, page);
+  }
+
+  // ── Pagination ────────────────────────────────────────────────────────────
+  function renderPagination(totalPages, page) {
+    if (totalPages <= 1) { document.getElementById('paginationContainer').innerHTML = ''; return; }
+
+    const btn = (label, pg, disabled = false, active = false) =>
+      `<button onclick="changePage(${pg})"
+               class="px-2 py-1 text-xs font-bold rounded ${active ? 'bg-primary text-white' : 'hover:bg-surface-container-high'}"
+               ${disabled ? 'disabled' : ''}>${label}</button>`;
+
+    let html = btn('‹', page - 1, page === 1);
+    const lo = Math.max(1, page - 2), hi = Math.min(totalPages, page + 2);
+    if (lo > 1) { html += btn('1', 1); if (lo > 2) html += '<span class="text-xs px-1">…</span>'; }
+    for (let i = lo; i <= hi; i++) html += btn(i, i, false, i === page);
+    if (hi < totalPages) { if (hi < totalPages - 1) html += '<span class="text-xs px-1">…</span>'; html += btn(totalPages, totalPages); }
+    html += btn('›', page + 1, page === totalPages);
+
+    document.getElementById('paginationContainer').innerHTML = html;
+  }
+
+  function changePage(page) {
+    currentPage = page;
+    displayResults(getFilteredResults(), page);
+  }
+
+  // ── Navigation ────────────────────────────────────────────────────────────
+  function showDetails(ticketId) {
+    const ticket = allResults.find(t => t.ticket_id === ticketId);
+    if (!ticket) return;
+    // Store the selected ticket so analysis.html can read it
+    sessionStorage.setItem('selectedTicket', JSON.stringify(ticket));
+    window.location.href = 'analysis.html';
+  }
+
+  // ── Data loading ──────────────────────────────────────────────────────────
+  async function loadResults() {
+    // First, try to load from locally cached results (set by scan action)
+    const localResults = localStorage.getItem('scanResults') || sessionStorage.getItem('scanResults');
+    if (localResults) {
+      allResults = JSON.parse(localResults);
+      allResults.sort((a, b) => a.score - b.score);
+      updateKPIs();
+      updateScoreDistribution();
+      displayResults(allResults, 1);
+      return;
+    }
+
+    // Second, try API fallback if local cache is unavailable
+    try {
+      const res = await fetch(API_ENDPOINT);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      allResults = await res.json();
+      localStorage.setItem('scanResults', JSON.stringify(allResults));
+    } catch (err) {
+      console.warn('API unavailable and no local results:', err.message);
+      document.getElementById('resultsTableBody').innerHTML =
+        `<tr><td colspan="5" class="px-6 py-8 text-center text-on-surface-variant">
+          Could not load results. Check that <code class="bg-surface-container px-1 rounded">${API_ENDPOINT}</code> is reachable, or run Scan first.
+        </td></tr>`;
+      document.getElementById('scanInfo').textContent = 'No data loaded';
+      document.getElementById('paginationInfo').textContent = 'Showing 0 of 0 tickets';
+      document.getElementById('paginationContainer').innerHTML = '';
+      return;
+    }
+
+    allResults.sort((a, b) => a.score - b.score);
+    updateKPIs();
+    updateScoreDistribution();
+    displayResults(allResults, 1);
+  }
+
+  // ── Search ────────────────────────────────────────────────────────────────
+  document.getElementById('searchInput').addEventListener('input', () => {
+    currentPage = 1;
+    displayResults(getFilteredResults(), 1);
+  });
+
+  // ── Boot ─────────────────────────────────────────────────────────────────
+  window.addEventListener('DOMContentLoaded', loadResults);
+</script>
+</body>
+</html>

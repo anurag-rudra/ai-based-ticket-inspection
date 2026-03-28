@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ticket Detail &amp; Analysis | AGL IncidentScout</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container": "#eceef2",
+                        "surface-container-low": "#f2f3f7",
+                        "primary-fixed-dim": "#bcc2ff",
+                        "tertiary-fixed": "#e1e2e6",
+                        "surface-bright": "#f8f9fd",
+                        "on-primary-fixed-variant": "#1e32bd",
+                        "tertiary": "#202326",
+                        "on-background": "#191c1f",
+                        "on-primary-container": "#8d9aff",
+                        "on-secondary-fixed": "#221b00",
+                        "secondary": "#705d00",
+                        "on-tertiary-fixed-variant": "#44474a",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f8f9fd",
+                        "surface-container-high": "#e7e8ec",
+                        "tertiary-container": "#35383b",
+                        "primary-fixed": "#dfe0ff",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#fcd400",
+                        "inverse-on-surface": "#eff1f4",
+                        "surface-container-highest": "#e1e2e6",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#454654",
+                        "primary": "#000f76",
+                        "surface-dim": "#d8dade",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#e9c400",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#9fa1a5",
+                        "on-surface": "#191c1f",
+                        "surface-tint": "#3c4ed5",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#bcc2ff",
+                        "surface-variant": "#e1e2e6",
+                        "on-secondary-container": "#6e5c00",
+                        "error": "#ba1a1a",
+                        "background": "#f8f9fd",
+                        "outline-variant": "#c5c5d7",
+                        "on-primary-fixed": "#000b62",
+                        "inverse-surface": "#2e3134",
+                        "on-tertiary-fixed": "#191c1f",
+                        "on-secondary-fixed-variant": "#544600",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#001cb0",
+                        "outline": "#757686",
+                        "secondary-fixed": "#ffe16d",
+                        "tertiary-fixed-dim": "#c5c6ca"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .display-font { font-family: 'Space Grotesk', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 flex items-center justify-between px-6 py-3 w-full bg-white dark:bg-slate-900 shadow-sm">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-blue-900 dark:text-blue-100">AGL IncidentScout</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-blue-600 transition-colors duration-200" href="index.html">Dashboard</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-blue-600 transition-colors duration-200" href="results.html">Scans</a>
+<a class="text-blue-700 dark:text-blue-400 border-b-2 border-blue-700 dark:border-blue-400 font-bold transition-colors duration-200" href="analysis.html">Analysis</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-blue-600 transition-colors duration-200" href="#">Settings</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-slate-100 border-none rounded-full text-sm focus:ring-2 focus:ring-blue-500 w-64" placeholder="Search reports..." type="text"/>
+</div>
+<button class="material-symbols-outlined p-2 text-slate-600 hover:bg-slate-100 rounded-full">notifications</button>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- SideNavBar (Hygiene Suite) -->
+<aside class="hidden lg:flex flex-col fixed left-0 top-0 h-full py-6 bg-slate-50 dark:bg-slate-950 h-screen w-64 border-r border-slate-200 dark:border-slate-800 z-40 mt-14">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<h2 class="text-lg font-black tracking-tighter text-blue-900 dark:text-white">Hygiene Suite</h2>
+</div>
+<p class="text-xs uppercase tracking-wider font-semibold Inter text-slate-500">Technical Curator v1.0</p>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-blue-600 hover:bg-blue-50/50 dark:hover:bg-slate-800 rounded-lg transition-all duration-300 ease-in-out" href="index.html">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<span class="text-xs uppercase tracking-wider font-semibold">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-blue-600 hover:bg-blue-50/50 dark:hover:bg-slate-800 rounded-lg transition-all duration-300 ease-in-out" href="results.html">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="text-xs uppercase tracking-wider font-semibold">All Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border-r-4 border-blue-700 rounded-lg transition-all duration-300 ease-in-out" href="analysis.html">
+<span class="material-symbols-outlined text-xl">fact_check</span>
+<span class="text-xs uppercase tracking-wider font-semibold">Details</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-blue-600 hover:bg-blue-50/50 dark:hover:bg-slate-800 rounded-lg transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined text-xl">settings</span>
+<span class="text-xs uppercase tracking-wider font-semibold">Criteria Config</span>
+</a>
+</nav>
+<div class="mt-auto px-3 space-y-1 border-t border-slate-200 dark:border-slate-800 pt-6">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-blue-600 rounded-lg" href="#">
+<span class="material-symbols-outlined text-xl">contact_support</span>
+<span class="text-xs uppercase tracking-wider font-semibold">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-blue-600 rounded-lg" href="#">
+<span class="material-symbols-outlined text-xl">history</span>
+<span class="text-xs uppercase tracking-wider font-semibold">Logs</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 lg:ml-64 p-8 bg-surface">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-surface-container-highest text-on-surface-variant px-3 py-1 rounded-full text-xs font-bold tracking-tight">TICKET DETAIL</span>
+<span class="text-outline">/</span>
+<span class="text-on-surface-variant text-xs font-medium" id="ticketIdHeader">—</span>
+</div>
+<h1 class="text-4xl font-bold tracking-tight text-primary" id="ticketTitle">Loading ticket details...</h1>
+<p class="text-on-surface-variant mt-2 max-w-2xl" id="ticketSynthesis">A detailed hygiene analysis of incident data quality and completeness for archival and compliance standards.</p>
+</div>
+<div class="flex gap-3">
+<button onclick="window.location.href='results.html'" class="flex items-center gap-2 px-5 py-2.5 bg-surface-container-lowest text-on-surface border border-outline-variant/30 rounded-lg font-semibold text-sm hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+Back to Results
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 bg-surface-container-lowest text-on-surface border border-outline-variant/30 rounded-lg font-semibold text-sm hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-lg">share</span>
+                        Share Report
+                    </button>
+<button class="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-br from-secondary to-on-secondary-container text-white rounded-lg font-bold text-sm shadow-lg shadow-secondary-container/20 hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-lg">download</span>
+                        Export Recommendations
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-8">
+<!-- Score Card -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest rounded-xl p-8 flex flex-col items-center justify-center text-center shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<span class="material-symbols-outlined" id="severityIcon" style="font-size: 100px; opacity: 0.3;">health_metrics</span>
+</div>
+<h3 class="text-on-surface-variant text-sm font-bold uppercase tracking-widest mb-6">Hygiene Score</h3>
+<div class="relative w-48 h-48 flex items-center justify-center mb-6">
+<svg id="scoreCircle" class="w-full h-full -rotate-90">
+<circle class="text-surface-container-highest" cx="96" cy="96" fill="transparent" r="88" stroke="currentColor" stroke-width="12"></circle>
+<circle id="scoreRing" cx="96" cy="96" fill="transparent" r="88" stroke="currentColor" stroke-dasharray="553" stroke-dashoffset="442" stroke-width="12"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="text-7xl font-bold display-font" id="scoreValue" style="color: #ba1a1a;">—</span>
+<span class="text-sm font-bold text-on-surface-variant">OUT OF 10</span>
+</div>
+</div>
+<div id="severityBadge" class="px-4 py-2 rounded-full text-xs font-bold mb-4">—</div>
+<p class="text-xs text-on-surface-variant leading-relaxed" id="scoreDescription">Loading score information...</p>
+</div>
+<!-- Incident Snapshot -->
+<div class="col-span-12 lg:col-span-8 grid grid-cols-2 gap-6">
+<div class="bg-surface-container-low rounded-xl p-6 border-l-4 border-primary">
+<p class="text-[10px] uppercase tracking-widest text-outline mb-2 font-bold">Priority</p>
+<div id="snapshotPriority" class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">priority_high</span>
+<span class="text-xl font-bold text-on-surface">—</span>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-6 border-l-4 border-outline-variant">
+<p class="text-[10px] uppercase tracking-widest text-outline mb-2 font-bold">Assigned To</p>
+<div id="snapshotAssignee" class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">person</span>
+<span class="text-xl font-bold text-on-surface">—</span>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-6 border-l-4 border-outline-variant">
+<p class="text-[10px] uppercase tracking-widest text-outline mb-2 font-bold">Created Date</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<span id="snapshotDate" class="text-xl font-bold text-on-surface">—</span>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-6 border-l-4 border-outline-variant">
+<p class="text-[10px] uppercase tracking-widest text-outline mb-2 font-bold">Resolution Time</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">timer</span>
+<span id="snapshotResolution" class="text-xl font-bold text-on-surface">—</span>
+</div>
+</div>
+</div>
+<!-- Detailed Analysis Table -->
+<div class="col-span-12 bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden mt-4">
+<div class="px-8 py-6 border-b border-surface-container-high flex justify-between items-center bg-slate-50/50">
+<h3 class="text-lg font-bold text-primary">Field-Level Hygiene Breakdown</h3>
+<div class="flex items-center gap-2 text-xs font-semibold text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-500"></span> Passed</span>
+<span class="flex items-center gap-1 ml-4"><span class="w-2 h-2 rounded-full bg-error"></span> Failed</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low">
+<tr>
+<th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Field Name</th>
+<th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Current Value</th>
+<th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Status</th>
+<th class="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Recommendation</th>
+</tr>
+</thead>
+<tbody id="fieldBreakdownBody" class="divide-y divide-surface-container-low">
+<!-- Failed: Resolution Notes -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-8 py-6 align-top">
+<div class="font-bold text-on-surface">Resolution Notes</div>
+</td>
+<td class="px-8 py-6 align-top">
+<div class="text-sm italic text-on-surface-variant line-clamp-2">"Rebooted server and service resumed."</div>
+</td>
+<td class="px-8 py-6 align-top">
+<div class="flex items-center gap-1.5 text-error font-bold text-xs uppercase tracking-tight">
+<span class="material-symbols-outlined text-sm">cancel</span>
+                                            INSUFFICIENT
+                                        </div>
+</td>
+<td class="px-8 py-6 align-top">
+<div class="p-3 bg-error/5 rounded-lg border border-error/10">
+<p class="text-xs text-error font-medium leading-relaxed">Ensure resolution notes are at least 50 words and include root cause analysis (RCA) findings.</p>
+</div>
+</td>
+</tr>
+<!-- Failed: Category -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-8 py-6 align-top">
+<div class="font-bold text-on-surface">Category</div>
+</td>
+<td class="px-8 py-6 align-top">
+<div class="text-sm text-on-surface-variant">Other / Miscellaneous</div>
+</td>
+<td class="px-8 py-6 align-top">
+<div class="flex items-center gap-1.5 text-error font-bold text-xs uppercase tracking-tight">
+<span class="material-symbols-outlined text-sm">cancel</span>
+                                            NON-SPECIFIC
+                                        </div>
+</td>
+<td class="px-8 py-6 align-top">
+<div class="p-3 bg-error/5 rounded-lg border border-error/10">
+<p class="text-xs text-error font-medium leading-relaxed">Select a more specific category from the dropdown (e.g., Network &gt; Infrastructure &gt; AWS Cloud).</p>
+</div>
+</td>
+</tr>
+<!-- Passed: Incident ID -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-8 py-6 align-top">
+<div class="font-bold text-on-surface">Incident ID</div>
+</td>
+<td class="px-8 py-6 align-top">
+<div class="text-sm text-on-surface-variant">#INC-12345</div>
+</td>
+<td class="px-8 py-6 align-top">
+<div class="flex items-center gap-1.5 text-green-600 font-bold text-xs uppercase tracking-tight">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                                            VALIDATED
+                                        </div>
+</td>
+<td class="px-8 py-6 align-top">
+<div class="p-3 bg-green-50 rounded-lg border border-green-100">
+<p class="text-xs text-green-700 font-medium leading-relaxed">No action required. ID format is consistent with technical standards.</p>
+</div>
+</td>
+</tr>
+<!-- Failed: Tags -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-8 py-6 align-top">
+<div class="font-bold text-on-surface">Tags</div>
+</td>
+<td class="px-8 py-6 align-top">
+<div class="text-sm text-on-surface-variant italic">None</div>
+</td>
+<td class="px-8 py-6 align-top">
+<div class="flex items-center gap-1.5 text-error font-bold text-xs uppercase tracking-tight">
+<span class="material-symbols-outlined text-sm">cancel</span>
+                                            MISSING
+                                        </div>
+</td>
+<td class="px-8 py-6 align-top">
+<div class="p-3 bg-error/5 rounded-lg border border-error/10">
+<p class="text-xs text-error font-medium leading-relaxed">Add at least 3 relevant technical tags for indexing (e.g., #AWS, #Outage, #NodeB7).</p>
+</div>
+</td>
+</tr>
+<!-- Passed: Impact Assessment -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-8 py-6 align-top">
+<div class="font-bold text-on-surface">Impact Assessment</div>
+</td>
+<td class="px-8 py-6 align-top">
+<div class="text-sm text-on-surface-variant">High - 450 users affected</div>
+</td>
+<td class="px-8 py-6 align-top">
+<div class="flex items-center gap-1.5 text-green-600 font-bold text-xs uppercase tracking-tight">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                                            COMPLETED
+                                        </div>
+</td>
+<td class="px-8 py-6 align-top">
+<div class="p-3 bg-green-50 rounded-lg border border-green-100">
+<p class="text-xs text-green-700 font-medium leading-relaxed">Impact scope is clearly defined with quantitative data.</p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Analysis Summary -->
+<div class="col-span-12 lg:col-span-6 bg-primary-container text-white rounded-xl p-8 shadow-xl relative overflow-hidden">
+<div class="absolute -right-20 -bottom-20 w-64 h-64 bg-primary rounded-full opacity-20"></div>
+<h3 class="text-xl font-bold mb-4 relative z-10">AI-Powered Synthesis</h3>
+<p id="synthesisText" class="text-sm text-blue-100 leading-relaxed mb-6 relative z-10">Loading synthesis...</p>
+<div class="flex items-center gap-4 relative z-10">
+<div class="flex -space-x-2">
+<img alt="Reviewer" class="w-8 h-8 rounded-full border-2 border-primary" data-alt="Female tech leader professional portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8q1V2XEnVr0cKR_6GHNLTWC_CruYeyPUPwsof4PSg4cu7qfwqE64bEGXGz-2vtTyNdgjZw7i0FWAiiuto8MTr-XI1IRN7D9Vau1vRZlF8qWiQ0Jehq3ftPJQNlxJg5tSPpprn0gxcqYILMJEkxbickOZyyjSIKZIdRItLLEmhI-JKiOdUU0ehcHx4L9oCwmPWL6SJU45xASZ7WLkU_DVy-h4SsqHeF3zpi9L0iXtelmlw18pYnnIIE78s60uWZCNauzcX9isVUp85"/>
+<img alt="Reviewer" class="w-8 h-8 rounded-full border-2 border-primary" data-alt="Male senior analyst professional portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqKelf95erWN6StX0tvKhXVC5atHSOv3C7f10ij1XCa1dl4DXKs_ToDq-yzxdN_ct5cabYsFui939bbancCVaiqWep3yVpzGvikU9yspG8KWFZvDIjthNUTfGmaYrB_zK2mEqpvqx3Oxc-Gg8iOlx_HCzM7zSXvIRaQOhIH-gXts-50IjhmQfowxtZGW1HQDVnx9jJANeglEfp9cG4GM34wJBFeAoNvEPWemrcIvOEeORzkVsM1WkILxq1AW1SSbY7OdV_5oDk4xNN"/>
+</div>
+<span class="text-xs font-semibold text-primary-fixed">Reviewed by Curators</span>
+</div>
+</div>
+<!-- Remediation Timeline -->
+<div class="col-span-12 lg:col-span-6 bg-surface-container-low rounded-xl p-8">
+<h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-6">Remediation Steps</h3>
+<div id="remediationSteps" class="space-y-6">
+Loading remediation steps...
+</div>
+</div>
+</div>
+<!-- Footer Spacer -->
+<div class="h-24"></div>
+</main>
+</div>
+<!-- Floating Action for Mobile -->
+<div class="fixed bottom-6 right-6 lg:hidden">
+<button class="w-14 h-14 rounded-full bg-primary text-white shadow-2xl flex items-center justify-center active:scale-95 transition-transform">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+<script>
+  let ticket = null;
+
+  function loadTicketDetails() {
+    const ticketData = localStorage.getItem('selectedTicketDetail');
+    if (!ticketData) {
+      document.getElementById('ticketTitle').textContent = 'No ticket selected';
+      return;
+    }
+
+    ticket = JSON.parse(ticketData);
+    
+    // Update header
+    document.getElementById('ticketIdHeader').textContent = ticket.ticket_id;
+    document.getElementById('ticketTitle').textContent = ticket.ticket_id;
+    document.getElementById('ticketSynthesis').textContent = ticket.synthesis;
+    
+    // Update score visualization
+    const score = ticket.score;
+    const scoreValue = Math.round((score / 10) * 100);
+    const circumference = 553; // 2 * PI * r
+    const offset = circumference - (scoreValue / 100) * circumference;
+    
+    document.getElementById('scoreValue').textContent = ticket.score_display.split('/')[0];
+    document.getElementById('scoreRing').setAttribute('stroke-dashoffset', offset);
+    
+    // Update score colors based on severity
+    let scoreColor = '#ba1a1a'; // CRITICAL
+    let severityIcon = 'warning';
+    let badgeClass = 'bg-error-container text-on-error-container';
+    let badgeText = 'CRITICAL ATTENTION REQUIRED';
+    
+    if (ticket.severity === 'GOOD') {
+      scoreColor = '#166534';
+      severityIcon = 'check_circle';
+      badgeClass = 'bg-[#166534]/20 text-[#166534]';
+      badgeText = 'GOOD HYGIENE';
+    } else if (ticket.severity === 'MODERATE') {
+      scoreColor = '#f97316';
+      severityIcon = 'info';
+      badgeClass = 'bg-[#f97316]/20 text-[#f97316]';
+      badgeText = 'MODERATE ATTENTION REQUIRED';
+    }
+    
+    document.getElementById('scoreValue').style.color = scoreColor;
+    document.getElementById('scoreRing').setAttribute('stroke', scoreColor);
+    document.getElementById('severityIcon').textContent = severityIcon;
+    document.getElementById('severityBadge').className = badgeClass + ' px-4 py-2 rounded-full text-xs font-bold mb-4';
+    document.getElementById('severityBadge').textContent = badgeText;
+    document.getElementById('scoreDescription').textContent = `This ticket scored ${ticket.score_display}. ${ticket.synthesis.substring(0, 100)}...`;
+    
+    // Update incident snapshot
+    document.getElementById('snapshotPriority').innerHTML = `<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">priority_high</span><span class="text-xl font-bold text-on-surface">${ticket.snapshot.priority || '—'}</span>`;
+    document.getElementById('snapshotAssignee').innerHTML = `<span class="material-symbols-outlined text-outline">person</span><span class="text-xl font-bold text-on-surface">${ticket.snapshot.assigned_to || '—'}</span>`;
+    document.getElementById('snapshotDate').textContent = ticket.snapshot.opened_at || '—';
+    document.getElementById('snapshotResolution').textContent = ticket.snapshot.resolution_time || '—';
+    
+    // Update field-level breakdown
+    displayFieldBreakdown();
+    
+    // Update synthesis
+    document.getElementById('synthesisText').textContent = ticket.synthesis;
+    
+    // Update remediation steps
+    displayRemediationSteps();
+  }
+
+  function displayFieldBreakdown() {
+    const tbody = document.getElementById('fieldBreakdownBody');
+    const fields = ticket.field_results || [];
+    
+    const rows = fields.map(field => {
+      const statusColor = field.passed ? 'text-green-600' : 'text-error';
+      const statusIcon = field.passed ? 'check_circle' : 'cancel';
+      const bgColor = field.passed ? 'bg-green-50 border border-green-100' : 'bg-error/5 border border-error/10';
+      const textColor = field.passed ? 'text-green-700' : 'text-error';
+      
+      return `
+        <tr class="hover:bg-surface-container-low transition-colors">
+          <td class="px-8 py-6 align-top">
+            <div class="font-bold text-on-surface">${field.label}</div>
+          </td>
+          <td class="px-8 py-6 align-top">
+            <div class="text-sm text-on-surface-variant line-clamp-2">${field.current_value}</div>
+          </td>
+          <td class="px-8 py-6 align-top">
+            <div class="flex items-center gap-1.5 ${statusColor} font-bold text-xs uppercase tracking-tight">
+              <span class="material-symbols-outlined text-sm">${statusIcon}</span>
+              ${field.status_label}
+            </div>
+          </td>
+          <td class="px-8 py-6 align-top">
+            <div class="p-3 ${bgColor} rounded-lg">
+              <p class="text-xs ${textColor} font-medium leading-relaxed">${field.recommendation}</p>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+    
+    tbody.innerHTML = rows;
+  }
+
+  function displayRemediationSteps() {
+    const container = document.getElementById('remediationSteps');
+    const steps = ticket.remediation_steps || [];
+    
+    if (steps.length === 0) {
+      container.innerHTML = '<p class="text-on-surface-variant text-sm">No remediation steps needed.</p>';
+      return;
+    }
+    
+    const stepsHtml = steps.map((step, idx) => {
+      const isActive = idx === 0;
+      const bgColor = isActive ? 'bg-secondary-container' : 'bg-surface-container-highest';
+      const textColor = isActive ? 'text-on-secondary-container' : 'text-outline';
+      const icon = isActive ? 'history' : 'edit';
+      const opacityClass = isActive ? '' : 'opacity-50';
+      
+      return `
+        <div class="flex gap-4">
+          <div class="flex flex-col items-center">
+            <div class="w-6 h-6 rounded-full ${bgColor} flex items-center justify-center ${textColor}">
+              <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'wght' 700;">${icon}</span>
+            </div>
+            ${idx < steps.length - 1 ? '<div class="w-0.5 h-full bg-outline-variant/30 mt-2"></div>' : ''}
+          </div>
+          <div>
+            <p class="text-sm font-bold text-on-surface ${opacityClass}">Step ${step.step}: ${step.field}</p>
+            <p class="text-xs text-on-surface-variant mt-1 ${opacityClass}">${step.action}</p>
+          </div>
+        </div>
+      `;
+    }).join('');
+    
+    container.innerHTML = stepsHtml;
+  }
+
+  window.addEventListener('DOMContentLoaded', loadTicketDetails);
+</script>
+</body></html>

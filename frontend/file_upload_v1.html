@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lumen Logic - Upload Incident Data</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-fixed": "#ffe16d",
+              "primary": "#000f76",
+              "surface-variant": "#e1e2e6",
+              "secondary": "#705d00",
+              "inverse-primary": "#bcc2ff",
+              "on-tertiary-fixed": "#191c1f",
+              "surface": "#f8f9fd",
+              "primary-container": "#001cb0",
+              "on-surface": "#191c1f",
+              "inverse-surface": "#2e3134",
+              "on-primary": "#ffffff",
+              "tertiary": "#202326",
+              "primary-fixed-dim": "#bcc2ff",
+              "background": "#f8f9fd",
+              "on-background": "#191c1f",
+              "surface-container-lowest": "#ffffff",
+              "error": "#ba1a1a",
+              "on-tertiary-container": "#9fa1a5",
+              "on-primary-container": "#8d9aff",
+              "primary-fixed": "#dfe0ff",
+              "on-tertiary": "#ffffff",
+              "on-surface-variant": "#454654",
+              "on-error": "#ffffff",
+              "tertiary-fixed": "#e1e2e6",
+              "surface-container-low": "#f2f3f7",
+              "secondary-fixed-dim": "#e9c400",
+              "on-secondary-fixed": "#221b00",
+              "outline": "#757686",
+              "on-primary-fixed-variant": "#1e32bd",
+              "surface-container-highest": "#e1e2e6",
+              "outline-variant": "#c5c5d7",
+              "on-tertiary-fixed-variant": "#44474a",
+              "on-error-container": "#93000a",
+              "secondary-container": "#fcd400",
+              "surface-container": "#eceef2",
+              "surface-bright": "#f8f9fd",
+              "error-container": "#ffdad6",
+              "tertiary-fixed-dim": "#c5c6ca",
+              "surface-container-high": "#e7e8ec",
+              "on-secondary-fixed-variant": "#544600",
+              "surface-dim": "#d8dade",
+              "on-secondary": "#ffffff",
+              "inverse-on-surface": "#eff1f4",
+              "surface-tint": "#3c4ed5",
+              "on-secondary-container": "#6e5c00",
+              "on-primary-fixed": "#000b62",
+              "tertiary-container": "#35383b"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-overlay {
+        background: rgba(25, 28, 31, 0.4);
+        backdrop-filter: blur(8px);
+      }
+      .whisper-shadow {
+        box-shadow: 0 12px 32px -4px rgba(25, 28, 31, 0.06);
+      }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface flex min-h-screen">
+<!-- Sidebar Navigation (From Shared Components JSON) -->
+<aside class="hidden md:flex flex-col h-screen p-4 gap-2 bg-[#f2f3f7] dark:bg-slate-950 w-64 docked left-0 fixed z-10">
+<div class="mb-8 px-2">
+<h1 class="text-lg font-black text-[#001CB0] dark:text-blue-400 font-headline">Lumen Logic</h1>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-label">Technical Curator</p>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-slate-900 text-[#001CB0] dark:text-blue-300 rounded-lg shadow-sm font-['Inter'] text-sm font-medium transform active:scale-[0.98] transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-[#001CB0] hover:bg-white/50 dark:hover:bg-slate-800 rounded-lg font-['Inter'] text-sm font-medium transform active:scale-[0.98] transition-all" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+<span>Incidents</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-[#001CB0] hover:bg-white/50 dark:hover:bg-slate-800 rounded-lg font-['Inter'] text-sm font-medium transform active:scale-[0.98] transition-all" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-[#001CB0] hover:bg-white/50 dark:hover:bg-slate-800 rounded-lg font-['Inter'] text-sm font-medium transform active:scale-[0.98] transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area (Background State) -->
+<main class="flex-1 md:ml-64 flex flex-col min-h-screen">
+<!-- Top App Bar (From Shared Components JSON) -->
+<header class="flex justify-between items-center px-6 py-3 w-full bg-white dark:bg-slate-900 shadow-sm dark:shadow-none docked full-width top-0 sticky z-20">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-[#001CB0] dark:text-blue-400 font-headline">Lumen Logic</span>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-[#001CB0] dark:text-blue-400 border-b-2 border-[#001CB0] py-1 font-['Space_Grotesk'] text-sm tracking-tight" href="#">Overview</a>
+<a class="text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors py-1 font-['Space_Grotesk'] text-sm tracking-tight" href="#">Reports</a>
+<a class="text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors py-1 font-['Space_Grotesk'] text-sm tracking-tight" href="#">System Health</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined p-2 text-slate-600 hover:bg-slate-50 rounded-full transition-colors">notifications</button>
+<button class="material-symbols-outlined p-2 text-slate-600 hover:bg-slate-50 rounded-full transition-colors">help_outline</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="close-up portrait of a professional system administrator in a modern office environment with soft bokeh lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYDxxPp-9CPNkDufhtaN4hSy3DWIdNC78QnIVkxwCwIcFqFf9DfU9E0_gmza-KC05H6MOCpgSi6P9j-VDGREWG2-Mhf5VcPxOt0W7lDrxJNHH3Rf_nNl5-szGGZKv1q4GeLn47wdFpLRHsi4o2S4zpGyYnRgR32obACFQoepFT0yFRluh52raP3HKcy-TRtdBNmgMSSrAt3dNK16l3C9MAioQJ9BXfKJGrTfxPwp_FrmdejdT8A_csSaO3UQeZiBbAh_yd6Mf6NGpe"/>
+</div>
+</div>
+</header>
+<div class="p-8 space-y-12">
+<!-- Hero Data Section -->
+<section class="flex flex-col md:flex-row justify-between items-end gap-6">
+<div class="space-y-2">
+<h2 class="text-[3.5rem] leading-none font-headline font-bold text-primary">08</h2>
+<p class="text-on-surface-variant font-label uppercase tracking-[0.2em] text-xs">Active High-Priority Incidents</p>
+</div>
+<button class="px-6 py-3 bg-gradient-to-br from-primary to-primary-container text-white rounded-lg shadow-lg font-medium hover:opacity-90 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">upload</span>
+                    Upload Incident Data
+                </button>
+</section>
+<!-- Bento Grid Dashboard -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Main Stats Card -->
+<div class="md:col-span-8 bg-surface-container-lowest p-6 rounded-xl whisper-shadow border border-outline-variant border-opacity-15">
+<div class="flex justify-between items-center mb-10">
+<h3 class="font-headline text-xl font-bold">Incident Velocity</h3>
+<div class="flex gap-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="w-3 h-3 rounded-full bg-secondary-container"></span>
+</div>
+</div>
+<div class="h-64 bg-surface-container-low rounded-lg flex items-end p-4 gap-2">
+<div class="flex-1 bg-primary/20 h-[40%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/20 h-[65%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/20 h-[50%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary h-[90%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/20 h-[30%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/20 h-[45%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/20 h-[55%] rounded-t-sm"></div>
+</div>
+</div>
+<!-- Secondary Metric Card -->
+<div class="md:col-span-4 bg-surface-container-low p-6 rounded-xl border border-outline-variant border-opacity-10">
+<h3 class="font-headline text-xl font-bold mb-6">Resolution Score</h3>
+<div class="flex flex-col items-center justify-center h-full space-y-4 pb-6">
+<div class="relative w-32 h-32 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-highest" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary-container" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-dasharray="364.4" stroke-dashoffset="72.8" stroke-width="8"></circle>
+</svg>
+<span class="absolute text-3xl font-headline font-bold">82%</span>
+</div>
+<p class="text-on-surface-variant text-sm text-center px-4">Performance is 12% higher than last technical quarter.</p>
+</div>
+</div>
+<!-- Recent Incidents Editorial Table -->
+<div class="md:col-span-12 bg-surface-container-lowest p-8 rounded-xl whisper-shadow border border-outline-variant border-opacity-15 overflow-hidden">
+<div class="flex justify-between items-center mb-8">
+<h3 class="font-headline text-xl font-bold">Incident Log</h3>
+<button class="text-primary text-sm font-medium flex items-center gap-1 hover:underline">
+                            View full journal <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<table class="w-full text-left">
+<thead>
+<tr class="text-on-surface-variant text-[10px] uppercase tracking-widest font-label border-b border-outline-variant border-opacity-15">
+<th class="pb-4 font-semibold">Incident ID</th>
+<th class="pb-4 font-semibold">Source System</th>
+<th class="pb-4 font-semibold">Severity</th>
+<th class="pb-4 font-semibold">Status</th>
+<th class="pb-4 font-semibold text-right">Timestamp</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant divide-opacity-5">
+<tr class="group hover:bg-surface-container-high transition-colors">
+<td class="py-5 font-headline font-medium text-primary">#LL-8942</td>
+<td class="py-5 text-sm">Cloud_Gateway_West_02</td>
+<td class="py-5">
+<span class="px-2 py-1 bg-error-container text-on-error-container text-[10px] font-bold rounded uppercase">Critical</span>
+</td>
+<td class="py-5 text-sm flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+                                    Investigating
+                                </td>
+<td class="py-5 text-right font-label text-xs text-on-surface-variant">2023-11-24 14:02:11</td>
+</tr>
+<tr class="group hover:bg-surface-container-high transition-colors">
+<td class="py-5 font-headline font-medium text-primary">#LL-8941</td>
+<td class="py-5 text-sm">Auth_Service_Primary</td>
+<td class="py-5">
+<span class="px-2 py-1 bg-surface-container-highest text-on-surface-variant text-[10px] font-bold rounded uppercase">Medium</span>
+</td>
+<td class="py-5 text-sm flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                                    Contained
+                                </td>
+<td class="py-5 text-right font-label text-xs text-on-surface-variant">2023-11-24 13:45:55</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-50 glass-overlay flex items-center justify-center p-4">
+<!-- Modal Container -->
+<div class="bg-surface-container-lowest w-full max-w-xl rounded-xl whisper-shadow border border-outline-variant border-opacity-20 overflow-hidden flex flex-col">
+<!-- Modal Header -->
+<div class="p-8 pb-4 flex justify-between items-start">
+<div class="space-y-1">
+<h2 class="text-2xl font-headline font-bold text-primary">Upload Incident Data</h2>
+<p class="text-on-surface-variant text-sm">Select or drag technical log files for automated curation.</p>
+</div>
+<button id="closePopup" class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">close</button>
+</div>
+<!-- Modal Body -->
+<div class="p-8 space-y-8">
+<!-- Drop Zone -->
+<div class="group relative flex flex-col items-center justify-center py-16 px-6 bg-surface-container-low border-2 border-dashed border-outline-variant border-opacity-30 rounded-xl transition-all hover:bg-secondary-container hover:bg-opacity-5 hover:border-primary-container">
+<div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 whisper-shadow">
+<span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings: 'FILL' 1;">description</span>
+</div>
+<div class="text-center space-y-2">
+<p class="font-headline font-semibold text-on-surface">Drag &amp; Drop your .xlsx or .csv file here</p>
+<p class="text-xs text-on-surface-variant font-label">Maximum file size: 50MB</p>
+</div>
+<button id="uploadBtn" class="mt-6 px-6 py-2 bg-white border border-outline-variant border-opacity-40 text-sm font-medium rounded-lg hover:border-primary-container hover:text-primary transition-all active:scale-95">
+                        Browse Files
+                    </button>
+<input id="incidentFileInput" type="file" accept=".csv,.xlsx" class="hidden" />
+</div>
+<!-- Progress Section -->
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="text-[10px] uppercase tracking-widest font-label font-bold text-on-surface-variant">Upload Progress</span>
+<span id="uploadStatus" class="text-xs font-medium text-on-surface-variant italic">Waiting for file...</span>
+</div>
+<!-- Progress Bar Track -->
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div id="uploadProgress" class="h-full w-0 bg-gradient-to-r from-primary to-primary-container rounded-full transition-all duration-500"></div>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="px-8 py-6 bg-surface-container-low flex justify-end items-center gap-4">
+<button id="cancelUpload" class="px-5 py-2.5 text-sm font-medium text-on-surface-variant hover:text-primary transition-colors">
+                    Cancel
+                </button>
+<button id="startUploadBtn" class="px-8 py-2.5 bg-primary/40 text-on-primary/60 text-sm font-bold rounded-lg flex items-center gap-2 cursor-not-allowed opacity-50" disabled>
+<span class="material-symbols-outlined text-sm">play_arrow</span>
+                    Start Upload
+                </button>
+</div>
+</div>
+</div>
+<script src="assets/scripts/file_upload.js"></script>
+</body></html>
